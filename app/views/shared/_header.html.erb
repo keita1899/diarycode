@@ -1,0 +1,18 @@
+<header class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 shadow-sm z-50">
+  <div class="max-w-6xl mx-auto px-4 flex justify-between items-center h-16">
+    <!-- Logo -->
+    <div>
+      <%= link_to root_path, class: "text-blue-600 text-2xl font-bold hover:text-blue-700 transition-colors" do %>
+        DailyCode
+      <% end %>
+    </div>
+    
+    <!-- Navigation buttons -->
+    <div class="flex items-center space-x-4">
+      <%= link_to "ログイン", "#",
+          class: "text-gray-700 hover:text-gray-900 px-4 py-2 rounded transition-colors" %>
+      <%= link_to "新規登録", "#",
+          class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow transition-colors" %>
+    </div>
+  </div>
+</header> 

@@ -1,7 +1,7 @@
 FROM ruby:3.2.2-slim
 
 RUN apt-get update -qq && \
-    apt-get install -y build-essential libpq-dev postgresql-client curl git && \
+    apt-get install -y build-essential libpq-dev postgresql-client curl git watchman && \
     curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get install -y nodejs
 
@@ -18,4 +18,4 @@ COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 
-CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD ["bin/dev"]
