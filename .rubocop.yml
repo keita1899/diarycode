@@ -1,0 +1,14 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-capybara
+  - rubocop-factory_bot
+
+inherit_from:
+  - config/rubocop/rubocop.yml
+  - config/rubocop/rails.yml
+  - config/rubocop/rspec.yml
+
+AllCops:
+  TargetRubyVersion: 3.2.2
+  SuggestExtensions: false
