@@ -1,0 +1,114 @@
+ja:
+  activerecord:
+    models:
+      user: "ユーザー"
+      report: "日報"
+    attributes:
+      user:
+        email: "メールアドレス"
+        password: "パスワード"
+        password_confirmation: "パスワード確認"
+        current_password: "現在のパスワード"
+        remember_me: "ログイン状態を保持する"
+      report:
+        date: "日付"
+        body: "内容"
+        user: "ユーザー"
+        created_at: "作成日時"
+        updated_at: "更新日時"
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              blank: "を入力してください"
+              invalid: "の形式が正しくありません"
+              taken: "は既に使用されています"
+            password:
+              blank: "を入力してください"
+              too_short: "は%{count}文字以上で入力してください"
+              confirmation: "と確認が一致しません"
+        report:
+          attributes:
+            date:
+              blank: "を入力してください"
+              taken: "の日報は既に作成されています"
+            body:
+              blank: "を入力してください"
+  # フラッシュメッセージ
+  flash:
+    reports:
+      create:
+        notice: "日報を作成しました"
+        alert: "日報の作成に失敗しました"
+      update:
+        notice: "日報を更新しました"
+        alert: "日報の更新に失敗しました"
+      destroy:
+        notice: "日報を削除しました"
+        alert: "日報の削除に失敗しました"
+  # 日付・時間の表示フォーマット
+  date:
+    formats:
+      default: "%Y年%m月%d日"
+      short: "%m/%d"
+      long: "%Y年%m月%d日(%a)"
+    abbr_day_names:
+      - 日
+      - 月
+      - 火
+      - 水
+      - 木
+      - 金
+      - 土
+    day_names:
+      - 日曜日
+      - 月曜日
+      - 火曜日
+      - 水曜日
+      - 木曜日
+      - 金曜日
+      - 土曜日
+    abbr_month_names:
+      - ~
+      - 1月
+      - 2月
+      - 3月
+      - 4月
+      - 5月
+      - 6月
+      - 7月
+      - 8月
+      - 9月
+      - 10月
+      - 11月
+      - 12月
+    month_names:
+      - ~
+      - 1月
+      - 2月
+      - 3月
+      - 4月
+      - 5月
+      - 6月
+      - 7月
+      - 8月
+      - 9月
+      - 10月
+      - 11月
+      - 12月
+
+  time:
+    formats:
+      default: "%Y年%m月%d日 %H:%M"
+      short: "%m/%d %H:%M"
+      long: "%Y年%m月%d日(%a) %H時%M分%S秒"
+
+  # ボタンやリンクテキスト
+  helpers:
+    submit:
+      report:
+        create: "日報を作成"
+        update: "日報を更新"
+      user:
+        create: "アカウント作成"

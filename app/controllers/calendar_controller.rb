@@ -13,6 +13,11 @@ class CalendarController < ApplicationController
                        @today.beginning_of_month
                      end
     @calendar_days = build_calendar_days(@current_month)
+
+    # 現在表示している月の日報データを取得（日付をキーとしたハッシュ）
+    @reports = current_user.reports.
+                 where(date: @calendar_days.first..@calendar_days.last).
+                 index_by(&:date)
   end
 
   private

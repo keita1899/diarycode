@@ -12,5 +12,8 @@ Rails.application.routes.draw do
   # Calendar route
   get "calendar" => "calendar#index"
 
+  # Reports routes
+  resources :reports, only: [:new, :create]
+
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 end
