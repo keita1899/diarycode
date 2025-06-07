@@ -16,11 +16,6 @@ class User < ApplicationRecord
     def password_complexity
       return if password.blank?
 
-      # 英数字のみを要求
-      unless password.match?(/\A[a-zA-Z0-9]+\z/)
-        errors.add(:password, "は英数字のみ使用できます")
-      end
-
       # 少なくとも1つの文字を含む必要がある
       unless password.match?(/[a-zA-Z]/)
         errors.add(:password, "には少なくとも1つの文字を含む必要があります")
