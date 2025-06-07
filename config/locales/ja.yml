@@ -3,7 +3,6 @@ ja:
     models:
       user: "ユーザー"
       report: "日報"
-    
     attributes:
       user:
         email: "メールアドレス"
@@ -11,14 +10,12 @@ ja:
         password_confirmation: "パスワード確認"
         current_password: "現在のパスワード"
         remember_me: "ログイン状態を保持する"
-      
       report:
         date: "日付"
         body: "内容"
         user: "ユーザー"
         created_at: "作成日時"
         updated_at: "更新日時"
-    
     errors:
       models:
         user:
@@ -31,7 +28,6 @@ ja:
               blank: "を入力してください"
               too_short: "は%{count}文字以上で入力してください"
               confirmation: "と確認が一致しません"
-        
         report:
           attributes:
             date:
@@ -39,7 +35,6 @@ ja:
               taken: "の日報は既に作成されています"
             body:
               blank: "を入力してください"
-  
   # フラッシュメッセージ
   flash:
     reports:
@@ -52,22 +47,12 @@ ja:
       destroy:
         notice: "日報を削除しました"
         alert: "日報の削除に失敗しました"
-  
   # 日付・時間の表示フォーマット
   date:
     formats:
       default: "%Y年%m月%d日"
       short: "%m/%d"
       long: "%Y年%m月%d日(%a)"
-  
-  time:
-    formats:
-      default: "%Y年%m月%d日 %H:%M"
-      short: "%m/%d %H:%M"
-      long: "%Y年%m月%d日(%a) %H時%M分%S秒"
-  
-  # 曜日
-  date:
     abbr_day_names:
       - 日
       - 月
@@ -84,7 +69,6 @@ ja:
       - 木曜日
       - 金曜日
       - 土曜日
-    
     abbr_month_names:
       - ~
       - 1月
@@ -113,7 +97,13 @@ ja:
       - 10月
       - 11月
       - 12月
-  
+
+  time:
+    formats:
+      default: "%Y年%m月%d日 %H:%M"
+      short: "%m/%d %H:%M"
+      long: "%Y年%m月%d日(%a) %H時%M分%S秒"
+
   # ボタンやリンクテキスト
   helpers:
     submit:
@@ -122,4 +112,3 @@ ja:
         update: "日報を更新"
       user:
         create: "アカウント作成"
-        update: "アカウント更新" 
