@@ -53,6 +53,10 @@ gem "devise-i18n-views"
 
 gem "letter_opener_web"
 
+gem "rails-i18n"
+
+gem "devise-i18n"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[mri windows]
