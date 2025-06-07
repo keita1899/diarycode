@@ -13,6 +13,14 @@
 
   <body class="bg-white pt-16">
     <%= render 'shared/header' %>
+    
+    <!-- グローバルフラッシュメッセージ（ページレベルで個別に表示しない場合） -->
+    <% if notice || alert || flash.any? %>
+      <div class="max-w-6xl mx-auto px-4 py-4">
+        <%= render 'shared/flash_messages' %>
+      </div>
+    <% end %>
+    
     <%= yield %>
   </body>
 </html>
