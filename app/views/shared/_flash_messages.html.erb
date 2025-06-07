@@ -106,40 +106,4 @@
   </div>
 <% end %>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // 閉じるボタンのイベントリスナー
-  document.querySelectorAll('.flash-close').forEach(function(button) {
-    button.addEventListener('click', function() {
-      const flashMessage = button.closest('.flash-message');
-      flashMessage.style.opacity = '0';
-      flashMessage.style.transform = 'translateY(-10px)';
-      setTimeout(function() {
-        flashMessage.remove();
-      }, 300);
-    });
-  });
-
-  // 自動閉じ機能
-  document.querySelectorAll('.flash-message[data-auto-dismiss]').forEach(function(message) {
-    const delay = parseInt(message.dataset.autoDismiss);
-    setTimeout(function() {
-      if (document.body.contains(message)) {
-        message.style.opacity = '0';
-        message.style.transform = 'translateY(-10px)';
-        setTimeout(function() {
-          if (document.body.contains(message)) {
-            message.remove();
-          }
-        }, 300);
-      }
-    }, delay);
-  });
-});
-</script>
-
-<style>
-.flash-message {
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-</style> 
+ 
