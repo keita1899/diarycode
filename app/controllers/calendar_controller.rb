@@ -3,7 +3,15 @@ class CalendarController < ApplicationController
 
   def index
     @today = Date.current
-    @current_month = params[:month] ? Date.parse(params[:month]) : @today.beginning_of_month
+    @current_month = if params[:month].present?
+                       begin
+                         Date.parse(params[:month]).beginning_of_month
+                       rescue Date::Error
+                         @today.beginning_of_month
+                       end
+                     else
+                       @today.beginning_of_month
+                     end
     @calendar_days = build_calendar_days(@current_month)
   end
 
