@@ -48,7 +48,7 @@
           <% report = @reports[date] %>
           <% has_report = report.present? %>
           
-          <%= link_to has_report ? report_path(report) : new_report_path(date: date.strftime('%Y-%m-%d')), 
+          <%= link_to new_report_path(date: date.strftime('%Y-%m-%d')), 
               class: "relative border-r border-b border-gray-200 h-24 group hover:bg-gray-50 transition-colors cursor-pointer block
                       #{'bg-blue-50' if is_today}" do %>
             
