@@ -39,6 +39,7 @@ ja:
         forgot_your_password: "パスワードを忘れましたか?"
         send_me_reset_password_instructions: "パスワードの再設定方法を送信する"
     registrations:
+      password_hint: "8文字以上の英数字（文字と数字の両方を含む）で入力してください"
       edit:
         are_you_sure: "本当に良いですか?"
         cancel_my_account: "アカウント削除"
