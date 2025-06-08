@@ -1,6 +1,6 @@
 class ReportsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_report, only: [:edit, :update]
+  before_action :set_report, only: [:edit, :update, :destroy]
 
   def new
     @report = current_user.reports.build
@@ -34,6 +34,11 @@ class ReportsController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @report.destroy!
+    redirect_to calendar_path, notice: t("flash.reports.destroy.notice")
   end
 
   private
