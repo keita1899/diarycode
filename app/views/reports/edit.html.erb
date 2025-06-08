@@ -1,0 +1,22 @@
+<div class="min-h-screen bg-gray-50 py-8">
+  <div class="max-w-6xl mx-auto px-4">
+    <!-- ヘッダー -->
+    <div class="mb-8">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-3xl font-bold text-gray-900">日報編集</h1>
+          <p class="text-gray-600 mt-1"><%= @report.date.strftime('%Y年%m月%d日') %>の日報</p>
+        </div>
+        
+        <%= link_to calendar_path, class: "text-gray-600 hover:text-gray-900 flex items-center space-x-1 transition-colors" do %>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+          <span>カレンダーに戻る</span>
+        <% end %>
+      </div>
+    </div>
+
+    <%= render 'form' %>
+  </div>
+</div> 
