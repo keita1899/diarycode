@@ -31,8 +31,20 @@
 
   <!-- 送信ボタン -->
   <div class="flex items-center justify-between pt-6">
-    <%= link_to "キャンセル", calendar_path, 
-        class: "text-gray-600 hover:text-gray-900 px-4 py-2 border border-gray-300 rounded-md transition-colors" %>
+    <div class="flex items-center space-x-3">
+      <%= link_to "キャンセル", calendar_path, 
+          class: "text-gray-600 hover:text-gray-900 px-4 py-2 border border-gray-300 rounded-md transition-colors" %>
+      
+      <% if @report.persisted? %>
+        <%= link_to "削除", report_path(@report), 
+            method: :delete,
+            data: { 
+              confirm: "#{@report.date.strftime('%Y年%m月%d日')}の日報を削除してもよろしいですか？",
+              turbo_method: :delete
+            },
+            class: "text-red-600 hover:text-red-700 px-4 py-2 border border-red-300 hover:border-red-400 rounded-md transition-colors" %>
+      <% end %>
+    </div>
     
     <%= form.submit @report.persisted? ? t('helpers.submit.report.update') : t('helpers.submit.report.create'), 
         class: "bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md shadow transition-colors" %>
