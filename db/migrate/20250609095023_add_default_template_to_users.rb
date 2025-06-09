@@ -1,5 +1,5 @@
 class AddDefaultTemplateToUsers < ActiveRecord::Migration[7.1]
   def change
-    add_column :users, :default_template_id, :integer
+    add_reference :users, :default_template, foreign_key: { to_table: :templates }
   end
 end
