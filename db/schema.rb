@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_06_230101) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_08_124052) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_06_230101) do
     t.datetime "updated_at", null: false
     t.index ["user_id", "date"], name: "index_reports_on_user_id_and_date", unique: true
     t.index ["user_id"], name: "index_reports_on_user_id"
+  end
+
+  create_table "templates", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "body", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_templates_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -37,4 +46,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_06_230101) do
   end
 
   add_foreign_key "reports", "users"
+  add_foreign_key "templates", "users"
 end

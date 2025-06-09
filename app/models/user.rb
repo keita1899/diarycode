@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :reports, dependent: :destroy
+  has_many :templates, dependent: :destroy
 
   # カスタムパスワードバリデーション
   validate :password_complexity, if: :password_required?
