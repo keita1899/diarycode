@@ -13,6 +13,11 @@ class ReportsController < ApplicationController
                    else
                      Date.current
                    end
+
+    # デフォルトテンプレートがある場合は自動挿入
+    if current_user.default_template && @report.body.blank?
+      @report.body = current_user.default_template.body
+    end
   end
 
   def create
