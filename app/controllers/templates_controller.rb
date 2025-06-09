@@ -1,6 +1,6 @@
 class TemplatesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_template, only: [:edit, :update, :destroy]
+  before_action :set_template, only: [:edit, :update, :destroy, :set_default]
 
   def index
     @templates = current_user.templates.order(created_at: :desc)
@@ -34,6 +34,18 @@ class TemplatesController < ApplicationController
   def destroy
     @template.destroy!
     redirect_to templates_path, notice: t("flash.templates.destroy.notice")
+  end
+
+  def set_default
+    if current_user.default_template == @template
+      # 既にデフォルトの場合は解除
+      current_user.clear_default_template
+      redirect_to templates_path, notice: t("flash.templates.unset_default.notice")
+    else
+      # デフォルトに設定
+      current_user.assign_default_template(@template)
+      redirect_to templates_path, notice: t("flash.templates.set_default.notice")
+    end
   end
 
   private

@@ -6,9 +6,22 @@ class User < ApplicationRecord
 
   has_many :reports, dependent: :destroy
   has_many :templates, dependent: :destroy
+  belongs_to :default_template, class_name: "Template", optional: true
 
   # カスタムパスワードバリデーション
   validate :password_complexity, if: :password_required?
+
+  # デフォルトテンプレートの設定メソッド
+  def assign_default_template(template)
+    if templates.include?(template)
+      update!(default_template: template)
+    end
+  end
+
+  # デフォルトテンプレートをクリア
+  def clear_default_template
+    update!(default_template: nil)
+  end
 
   private
 
