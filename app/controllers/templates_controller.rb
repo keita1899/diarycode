@@ -1,6 +1,6 @@
 class TemplatesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_template, only: [:destroy]
+  before_action :set_template, only: [:edit, :update, :destroy]
 
   def index
     @templates = current_user.templates.order(created_at: :desc)
@@ -17,6 +17,17 @@ class TemplatesController < ApplicationController
       redirect_to templates_path, notice: t("flash.templates.create.notice")
     else
       render :new, status: :unprocessable_entity
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if @template.update(template_params)
+      redirect_to templates_path, notice: t("flash.templates.update.notice")
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 

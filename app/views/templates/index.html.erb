@@ -24,7 +24,7 @@
         <div class="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow">
           <!-- テンプレートヘッダー -->
           <div class="mb-3">
-            <%= link_to "#", class: "text-lg font-semibold text-blue-600 hover:text-blue-800 transition-colors line-clamp-2 block" do %>
+            <%= link_to edit_template_path(template), class: "text-lg font-semibold text-blue-600 hover:text-blue-800 transition-colors line-clamp-2 block" do %>
               <%= template.title %>
             <% end %>
           </div>
