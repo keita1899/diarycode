@@ -28,7 +28,10 @@
 
         <!-- ユーザーメニュー（ドロップダウン） -->
         <div class="relative" data-dropdown>
-          <button class="text-gray-700 hover:text-gray-900 px-2 py-2 sm:px-4 rounded transition-colors flex items-center space-x-1" data-dropdown-toggle>
+          <button class="text-gray-700 hover:text-gray-900 px-2 py-2 sm:px-4 rounded transition-colors flex items-center space-x-1" data-dropdown-toggle
+          aria-expanded="false"
+          aria-haspopup="true"
+          aria-label="ユーザーメニューを開く">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
             </svg>
@@ -41,7 +44,10 @@
           </button>
           
           <!-- ドロップダウンメニュー -->
-          <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg py-1 hidden" data-dropdown-menu>
+          <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg py-1 hidden" 
+              data-dropdown-menu
+              role="menu"
+              aria-label="ユーザーメニュー">
             <!-- ユーザー情報 -->
             <div class="px-4 py-2 text-sm text-gray-600 border-b border-gray-100">
               <div class="font-medium truncate"><%= current_user.email %></div>
