@@ -1,6 +1,10 @@
 class TemplatesController < ApplicationController
   before_action :authenticate_user!
 
+  def index
+    @templates = current_user.templates.order(created_at: :desc)
+  end
+
   def new
     @template = current_user.templates.build
   end
@@ -9,7 +13,7 @@ class TemplatesController < ApplicationController
     @template = current_user.templates.build(template_params)
 
     if @template.save
-      redirect_to calendar_path, notice: t("flash.templates.create.notice")
+      redirect_to templates_path, notice: t("flash.templates.create.notice")
     else
       render :new, status: :unprocessable_entity
     end

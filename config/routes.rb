@@ -15,7 +15,8 @@ Rails.application.routes.draw do
   # Reports routes
   resources :reports, only: [:new, :create, :edit, :update, :destroy]
 
-  resources :templates, only: [:new, :create]
+  # Templates routes
+  resources :templates, only: [:index, :new, :create]
 
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 end
