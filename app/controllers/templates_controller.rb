@@ -1,5 +1,6 @@
 class TemplatesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_template, only: [:destroy]
 
   def index
     @templates = current_user.templates.order(created_at: :desc)
@@ -19,7 +20,16 @@ class TemplatesController < ApplicationController
     end
   end
 
+  def destroy
+    @template.destroy!
+    redirect_to templates_path, notice: t("flash.templates.destroy.notice")
+  end
+
   private
+
+    def set_template
+      @template = current_user.templates.find(params[:id])
+    end
 
     def template_params
       params.require(:template).permit(:title, :body)
