@@ -40,6 +40,8 @@ class TemplatesController < ApplicationController
 
     def set_template
       @template = current_user.templates.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to templates_path, alert: t("flash.templates.not_found.alert")
     end
 
     def template_params
