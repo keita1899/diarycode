@@ -44,6 +44,7 @@ class User < ApplicationRecord
       user
     end
   end
+
   # デフォルトテンプレートの設定メソッド
   def assign_default_template(template)
     if templates.include?(template)
@@ -75,6 +76,7 @@ class User < ApplicationRecord
   def connected_providers
     authentications.pluck(:provider)
   end
+
   private
 
     def password_required?
