@@ -39,6 +39,7 @@ class User < ApplicationRecord
         name: auth.info.name,
         email: auth.info.email,
         avatar_url: auth.info.image,
+        access_token: auth.credentials&.token,
       )
 
       user

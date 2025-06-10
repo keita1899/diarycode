@@ -1,6 +1,9 @@
 class Authentication < ApplicationRecord
   belongs_to :user
 
+  # Access tokenを暗号化して保存
+  encrypts :access_token
+
   validates :provider, :uid, presence: true
   validates :uid, uniqueness: { scope: :provider }
   validates :provider, uniqueness: { scope: :user_id }
