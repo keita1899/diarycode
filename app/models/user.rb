@@ -12,38 +12,40 @@ class User < ApplicationRecord
   # カスタムパスワードバリデーション
   validate :password_complexity, if: :password_required?
 
-  # OmniAuthでのユーザー作成・認証（新しいロジック）
+  # OmniAuthでのユーザー作成・認証
   def self.from_omniauth(auth)
-    # 既存の認証情報を検索
-    authentication = Authentication.find_by(provider: auth.provider, uid: auth.uid)
+    existing_authentication = find_existing_authentication(auth)
+    return existing_authentication.user if existing_authentication
 
-    if authentication
-      # 既存の認証情報が見つかった場合、そのユーザーを返す
-      authentication.user
-    else
-      # 同じメールアドレスのユーザーを検索
-      user = User.find_by(email: auth.info.email)
+    user = find_or_create_user_by_email(auth.info.email)
+    create_authentication_for_user(user, auth)
+    user
+  end
 
-      # ユーザーが存在しない場合は新規作成
-      if user.nil?
-        user = User.create!(
-          email: auth.info.email,
-          password: Devise.friendly_token[0, 20],
-        )
-      end
+  private_class_method def self.find_existing_authentication(auth)
+    Authentication.find_by(provider: auth.provider, uid: auth.uid)
+  end
 
-      # 新しい認証情報を作成
-      user.authentications.create!(
-        provider: auth.provider,
-        uid: auth.uid,
-        name: auth.info.name,
-        email: auth.info.email,
-        avatar_url: auth.info.image,
-        access_token: auth.credentials&.token,
-      )
+  private_class_method def self.find_or_create_user_by_email(email)
+    User.find_by(email: email) || create_user_with_email(email)
+  end
 
-      user
-    end
+  private_class_method def self.create_user_with_email(email)
+    User.create!(
+      email: email,
+      password: Devise.friendly_token[0, 20],
+    )
+  end
+
+  private_class_method def self.create_authentication_for_user(user, auth)
+    user.authentications.create!(
+      provider: auth.provider,
+      uid: auth.uid,
+      name: auth.info.name,
+      email: auth.info.email,
+      avatar_url: auth.info.image,
+      access_token: auth.credentials&.token,
+    )
   end
 
   # デフォルトテンプレートの設定メソッド
