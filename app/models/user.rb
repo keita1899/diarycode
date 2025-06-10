@@ -32,7 +32,7 @@ class User < ApplicationRecord
   end
 
   private_class_method def self.valid_auth_structure?(auth)
-    auth&.provider && auth&.uid
+    auth&.provider && auth.uid
   end
 
   private_class_method def self.find_existing_authentication(auth)
