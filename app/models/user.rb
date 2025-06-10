@@ -14,12 +14,25 @@ class User < ApplicationRecord
 
   # OmniAuthでのユーザー作成・認証
   def self.from_omniauth(auth)
+    # Validate auth structure
+    return nil unless valid_auth_structure?(auth)
+
     existing_authentication = find_existing_authentication(auth)
     return existing_authentication.user if existing_authentication
 
-    user = find_or_create_user_by_email(auth.info.email)
+    # Ensure email is present and verified
+    email = auth.info&.email
+    return nil if email.blank?
+
+    user = find_or_create_user_by_email(email)
+    return user unless user.persisted?
+
     create_authentication_for_user(user, auth)
     user
+  end
+
+  private_class_method def self.valid_auth_structure?(auth)
+    auth&.provider && auth&.uid
   end
 
   private_class_method def self.find_existing_authentication(auth)
@@ -31,21 +44,33 @@ class User < ApplicationRecord
   end
 
   private_class_method def self.create_user_with_email(email)
-    User.create!(
+    user = User.new(
       email: email,
       password: Devise.friendly_token[0, 20],
     )
+
+    unless user.save
+      Rails.logger.error "Failed to create user from OAuth: #{user.errors.full_messages}"
+    end
+
+    user
   end
 
   private_class_method def self.create_authentication_for_user(user, auth)
-    user.authentications.create!(
+    authentication = user.authentications.build(
       provider: auth.provider,
       uid: auth.uid,
-      name: auth.info.name,
-      email: auth.info.email,
-      avatar_url: auth.info.image,
+      name: auth.info&.name,
+      email: auth.info&.email,
+      avatar_url: auth.info&.image,
       access_token: auth.credentials&.token,
     )
+
+    unless authentication.save
+      Rails.logger.error "Failed to create authentication: #{authentication.errors.full_messages}"
+    end
+
+    authentication
   end
 
   # デフォルトテンプレートの設定メソッド
