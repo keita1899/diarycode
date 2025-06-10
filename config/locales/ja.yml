@@ -135,6 +135,12 @@ ja:
       short: '%m/%d %H:%M'
       long: '%Y年%m月%d日(%a) %H時%M分%S秒'
 
+  # Devise関連
+  devise:
+    omniauth_callbacks:
+      success: '%{kind}でのログインに成功しました。'
+      failure: '%{kind}でのログインに失敗しました。'
+
   # ボタンやリンクテキスト
   helpers:
     submit:
