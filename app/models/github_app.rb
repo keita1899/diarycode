@@ -22,7 +22,7 @@ class GithubApp
       { installed: true, installation_id: installation.id }
     rescue Octokit::NotFound => e
       Rails.logger.warn "Repository installation not found for #{repo_path}: #{e.message}"
-      { installed: false, error: "入力されたURLのリポジトリが見つかりません。リポジトリを設定する、もしくは正しいリポジトリのURLを入力してください" }
+      { installed: false, error: "設定したリポジトリが見つかりません" }
     rescue => e
       Rails.logger.error "GitHub App installation check failed: #{e.message}"
       { installed: false, error: "GitHub App installation check failed: #{e.message}" }
