@@ -28,6 +28,12 @@ class GithubApp
       { installed: false, error: "GitHub App installation check failed: #{e.message}" }
     end
   end
+
+  def create_installation_access_token(installation_id)
+    app_client = create_app_client
+    app_client.create_app_installation_access_token(installation_id)[:token]
+  end
+
   def installation_url
     return nil unless @app_id
 
