@@ -42,6 +42,13 @@ module CalendarHelper
   end
 
   def status_dot(color, title)
-    content_tag(:div, "", class: "w-2 h-2 bg-#{color}-500 rounded-full", title: title)
+    css_class = case color
+                when "blue"
+                  "w-2 h-2 bg-blue-500 rounded-full"
+                when "red"
+                  "w-2 h-2 bg-red-500 rounded-full"
+                end
+
+    content_tag(:div, "", class: css_class, title: title)
   end
 end
