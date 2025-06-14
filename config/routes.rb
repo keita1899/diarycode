@@ -24,5 +24,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :github_settings, only: [:edit, :update]
+
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 end

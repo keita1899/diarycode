@@ -57,6 +57,10 @@ gem "rails-i18n"
 
 gem "devise-i18n"
 
+gem "octokit", "~> 8.0"
+
+gem "jwt", "~> 2.7"
+
 # OAuth authentication
 gem "omniauth"
 gem "omniauth-github"
