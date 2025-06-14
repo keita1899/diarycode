@@ -1,6 +1,7 @@
 class GithubFile
   include ActiveModel::Model
   require "octokit"
+  require "base64"
 
   attr_accessor :repo_path, :file_path, :content, :commit_message, :access_token
 
