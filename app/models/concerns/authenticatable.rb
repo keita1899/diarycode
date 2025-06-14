@@ -4,16 +4,33 @@ module Authenticatable
   # rubocop:disable Metrics/BlockLength
   class_methods do
     def from_omniauth(auth)
-      return nil unless auth&.provider && auth.uid
+      return nil unless valid_auth?(auth)
 
-      user = existing_authentication?(auth) ? existing_user(auth) : create_new_user_from_auth(auth)
-      if auth.provider == "github"
-        user.update!(github_username: auth.info.nickname)
-      end
+      user = find_or_create_user_from_auth(auth)
+      return nil unless user
+
+      update_github_username(user, auth)
       user
     end
 
     private
+
+      def valid_auth?(auth)
+        auth&.provider && auth.uid
+      end
+
+      def find_or_create_user_from_auth(auth)
+        return existing_user(auth) if existing_authentication?(auth)
+
+        create_new_user_from_auth(auth)
+      end
+
+      def update_github_username(user, auth)
+        return unless auth.provider == "github"
+        return if auth.info&.nickname.blank?
+
+        user.update!(github_username: auth.info.nickname)
+      end
 
       def existing_authentication?(auth)
         Authentication.exists?(provider: auth.provider, uid: auth.uid)
@@ -27,10 +44,15 @@ module Authenticatable
         email = auth.info&.email
         return nil if email.blank?
 
-        user = find_by(email: email) || new(email: email, password: Devise.friendly_token[0, 20])
-        user.save! unless user.persisted?
-        user.authentications.create!(extract_auth_data(auth))
-        user
+        ActiveRecord::Base.transaction do
+          user = find_by(email: email) || new(email: email, password: Devise.friendly_token[0, 20])
+          user.save! unless user.persisted?
+          user.authentications.create!(extract_auth_data(auth))
+          user
+        rescue ActiveRecord::RecordInvalid => e
+          Rails.logger.error("OAuthユーザー作成に失敗しました: #{e.message}")
+          nil
+        end
       end
 
       def extract_auth_data(auth)
