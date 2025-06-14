@@ -10,7 +10,7 @@ class GithubSettingsController < ApplicationController
       github_app = GithubApp.new
       @installation_status = github_app.check_installation(@user.github_repo_name)
       @installation_url = github_app.installation_url
-    rescue => e
+    rescue Octokit::Unauthorized, Octokit::NotFound => e
       Rails.logger.error "GitHub App service error: #{e.message}"
       @github_app_error = "GitHub App設定に問題があります。環境変数を確認してください。"
     end

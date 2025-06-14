@@ -24,7 +24,7 @@ class Report < ApplicationRecord
 
     begin
       Date.parse(date_param)
-    rescue Date::Error
+    rescue ArgumentError
       Date.current
     end
   end
