@@ -15,6 +15,16 @@ class User < ApplicationRecord
   # カスタムパスワードバリデーション
   validate :password_complexity, if: :password_required?
 
+  def has_github_repo?
+    github_repo_url.present? && github_repo_url.match?(%r{\Ahttps://github\.com/[^/]+/[^/]+/?\z})
+  end
+
+  def github_repo_name
+    return nil unless has_github_repo?
+
+    github_repo_url.sub(%r{\Ahttps://github\.com/}, "").sub(/\.git\z/, "").chomp("/")
+  end
+
   private
 
     def password_required?
