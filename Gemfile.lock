@@ -432,7 +432,7 @@ DEPENDENCIES
   faker
   importmap-rails
   jbuilder
-  jwt
+  jwt (~> 2.7)
   letter_opener_web
   octokit (~> 8.0)
   omniauth

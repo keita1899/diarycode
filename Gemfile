@@ -59,7 +59,7 @@ gem "devise-i18n"
 
 gem "octokit", "~> 8.0"
 
-gem "jwt"
+gem "jwt", "~> 2.7"
 
 # OAuth authentication
 gem "omniauth"
