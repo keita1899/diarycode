@@ -3,28 +3,14 @@ class ReportsController < ApplicationController
   before_action :set_report, only: [:edit, :update, :destroy]
 
   def new
-    @report = current_user.reports.build
-    @report.date = if params[:date].present?
-                     begin
-                       Date.parse(params[:date])
-                     rescue Date::Error
-                       Date.current
-                     end
-                   else
-                     Date.current
-                   end
-
-    # デフォルトテンプレートがある場合は自動挿入
-    if current_user.default_template && @report.body.blank?
-      @report.body = current_user.default_template.body
-    end
+    @report = Report.build_for_user(current_user, date_param: params[:date])
   end
 
   def create
     @report = current_user.reports.build(report_params)
 
     if @report.save
-      redirect_to calendar_path, notice: t("flash.reports.create.notice")
+      handle_post_save_action(:create)
     else
       render :new, status: :unprocessable_entity
     end
@@ -35,7 +21,7 @@ class ReportsController < ApplicationController
 
   def update
     if @report.update(report_params)
-      redirect_to calendar_path, notice: t("flash.reports.update.notice")
+      handle_post_save_action(:update)
     else
       render :edit, status: :unprocessable_entity
     end
@@ -54,5 +40,15 @@ class ReportsController < ApplicationController
 
     def report_params
       params.require(:report).permit(:date, :body)
+    end
+
+    def handle_post_save_action(action_type)
+      if @report.should_push_to_github?(params.dig(:report, :push_to_github))
+        flash_data = @report.push_to_github_with_messages(action_type)
+        redirect_to calendar_path, flash_data[:type] => flash_data[:message]
+      else
+        notice_key = (action_type == :create) ? "flash.reports.create.notice" : "flash.reports.update.notice"
+        redirect_to calendar_path, notice: t(notice_key)
+      end
     end
 end
