@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_10_055522) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_13_144815) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -35,6 +35,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_10_055522) do
     t.text "body", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "github_pushed_at"
+    t.string "github_push_status"
+    t.string "github_commit_sha"
+    t.string "github_file_url"
     t.index ["user_id", "date"], name: "index_reports_on_user_id_and_date", unique: true
     t.index ["user_id"], name: "index_reports_on_user_id"
   end
@@ -57,6 +61,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_10_055522) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "default_template_id"
+    t.string "github_repo_url"
+    t.string "github_username"
     t.index ["default_template_id"], name: "index_users_on_default_template_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
