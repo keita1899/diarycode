@@ -41,48 +41,26 @@
 
       <div class="grid grid-cols-7">
         <% @calendar_days.each do |date| %>
-          <% is_today = date == @today %>
-          <% is_current_month = date.month == @current_month.month %>
-          <% is_sunday = date.wday == 0 %>
-          <% is_saturday = date.wday == 6 %>
           <% report = @reports[date] %>
           <% has_report = report.present? %>
           
           <%= link_to has_report ? edit_report_path(report) : new_report_path(date: date.strftime('%Y-%m-%d')), 
               class: "relative border-r border-b border-gray-200 h-24 group hover:bg-gray-50 transition-colors cursor-pointer block
-                      #{'bg-blue-50' if is_today}" do %>
+                      #{'bg-blue-50' if calendar_today?(date, @today)}
+                      #{'bg-green-50' if has_report}" do %>
             
             <!-- 日付番号 -->
             <div class="p-2">
               <span class="text-sm font-medium
-                          <%= if is_today
-                                'bg-blue-600 text-white px-2 py-1 rounded-full'
-                              elsif is_current_month
-                                if is_sunday
-                                  'text-red-600'
-                                elsif is_saturday
-                                  'text-blue-600'
-                                else
-                                  'text-gray-900'
-                                end
-                              else
-                                'text-gray-400'
-                              end %>">
+                <%= calendar_date_class(date, @today, @current_month) %>">
                 <%= date.day %>
               </span>
-              
-              <!-- 今日のマーク -->
-              <% if is_today %>
-                <div class="absolute top-1 right-1">
-                  <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
-                </div>
-              <% end %>
             </div>
 
             <!-- 日報があるかどうかの表示 -->
             <% if has_report %>
-              <div class="absolute bottom-2 left-2">
-                <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+              <div class="absolute bottom-2 left-2 flex items-center space-x-1">
+                <%= calendar_github_status_dot(report) %>
               </div>
             <% end %>
 
@@ -96,13 +74,19 @@
     <!-- 凡例 -->
     <div class="mt-6 flex flex-wrap items-center justify-center space-x-6 text-sm text-gray-600">
       <div class="flex items-center space-x-2">
-        <div class="w-3 h-3 bg-blue-600 rounded-full"></div>
-        <span>今日</span>
-      </div>
-      <div class="flex items-center space-x-2">
-        <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+        <div class="w-3 h-3 bg-green-50 border border-green-200 rounded"></div>
         <span>日報あり</span>
       </div>
+      <% if current_user.has_github_repo? %>
+        <div class="flex items-center space-x-2">
+          <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+          <span>プッシュ済み</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+          <span>プッシュ失敗</span>
+        </div>
+      <% end %>
     </div>
   </div>
 
