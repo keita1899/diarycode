@@ -7,7 +7,7 @@ class Report < ApplicationRecord
   validates :body, presence: true
 
   enum github_push_status: {
-    not_pushed: nil,
+    not_pushed: "not_pushed",
     pushed: "pushed",
     failed: "failed",
   }, _prefix: :github
