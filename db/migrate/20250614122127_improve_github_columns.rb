@@ -1,19 +1,24 @@
 class ImproveGithubColumns < ActiveRecord::Migration[7.1]
-  def change
+  def up
     add_index :users, :github_username, unique: true
 
     change_column_default :reports, :github_push_status, from: nil, to: "not_pushed"
-    
     change_column :reports, :github_commit_sha, :string, limit: 64
-    
     change_column :reports, :github_file_url, :text
-    
     add_index :reports, :github_push_status
-    
-    reversible do |dir|
-      dir.up do
-        Report.where(github_push_status: nil).update_all(github_push_status: "not_pushed")
-      end
-    end
+
+    execute <<~SQL
+      UPDATE reports SET github_push_status = 'not_pushed'
+      WHERE github_push_status IS NULL
+    SQL
+  end
+
+  def down
+    remove_index :users, :github_username
+
+    change_column_default :reports, :github_push_status, from: "not_pushed", to: nil
+    change_column :reports, :github_commit_sha, :string
+    change_column :reports, :github_file_url, :string
+    remove_index :reports, :github_push_status
   end
 end
